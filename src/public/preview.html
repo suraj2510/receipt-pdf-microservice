@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Receipt PDF Preview</title>
+</head>
+<body>
+  <h1>Generate Receipt</h1>
+  <button onclick="generateReceipt()">Generate & Preview PDF</button>
+
+  <script>
+    async function generateReceipt() {
+      const data = {
+        date: "2025-06-18",
+        customerName: "Suraj Maurya 1234",
+        customerEmail: "suraj@example.com",
+        customerPhone: "9876543210",
+        total: 175,
+        items: [
+          { name: "Widget A", quantity: 2, price: 890 },
+          { name: "Widget B", quantity: 1, price: 759 }
+        ]
+      };
+
+      try {
+        const response = await fetch("/api/receipts/generate", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
+        });
+
+        if (!response.ok) throw new Error("Failed to generate PDF");
+
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        window.open(url, "_blank");
+      } catch (err) {
+        alert("Error: " + err.message);
+      }
+    }
+  </script>
+</body>
+</html>
