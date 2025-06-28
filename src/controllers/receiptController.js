@@ -4,7 +4,7 @@ class ReceiptController {
   constructor(pdfService, generateReceiptId) {
     this.pdfService = pdfService;
     this.generateReceiptId = generateReceiptId;
-  }
+  }   
 
   generateReceipt = async (req, res) => {
     try {
